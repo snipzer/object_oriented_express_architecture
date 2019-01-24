@@ -160,13 +160,10 @@ class UserService extends BaseService {
     }
 
     _calculateUserDiff(user, req) {
-        const userChange = { id: req.body.userId };
-        if (user.pseudo !== req.body.pseudo) {
-            userChange.pseudo = req.body.pseudo;
-        }
-        if (user.email !== req.body.email) {
-            userChange.email = req.body.email;
-        }
+        const userChange = {};
+        userChange.id = req.body.userId;
+        userChange.pseudo = req.body.pseudo;
+        userChange.email = req.body.email;
         return userChange;
     }
 

@@ -2,8 +2,7 @@
   "name": "architecture_express",
   "version": "1.0.0",
   "author": "Loic Arif <loic.arif@gmail.com>",
-  "contributors": [
-  ],
+  "contributors": [],
   "homepage": "",
   "scripts": {
     "commitmsg": "validate-commit-msg",
