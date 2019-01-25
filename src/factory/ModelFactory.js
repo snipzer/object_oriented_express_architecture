@@ -29,7 +29,7 @@ class ModelFactory extends BaseFactory {
     static _init(models, sequelizeConnection, logger) {
         return new Promise((resolve, reject) => {
             try {
-                models.userModel = new UserModel(sequelizeConnection, logger, 'user').getModel();
+                models.user = new UserModel(sequelizeConnection, logger, 'user').getModel();
                 resolve();
             } catch (err) {
                 reject(err);
@@ -51,7 +51,7 @@ class ModelFactory extends BaseFactory {
     static _syncModels(models) {
         return new Promise((resolve, reject) => {
             const promises = [];
-            promises.push(models.userModel.sync());
+            promises.push(models.user.sync());
             Promise.all(promises).then(() => {
                 resolve();
             }).catch(err => reject(err));

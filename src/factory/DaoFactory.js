@@ -8,7 +8,7 @@ class DaoFactory extends BaseFactory {
     static initDaos(daos, models, logger) {
         return new Promise((resolve, reject) => {
             try {
-                daos.userDao = new UserDao(logger, models.userModel);
+                daos.user = new UserDao(logger, models.user);
                 resolve();
             } catch (err) {
                 reject(err);

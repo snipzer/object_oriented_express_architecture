@@ -10,7 +10,7 @@ class ControllerUtil extends BaseFactory {
         return new Promise((resolve, reject) => {
             try {
                 app.use('/', router);
-                const userController = new UserController(router, services.userService, logger, statusHandler, '/api/user');
+                const userController = new UserController(router, services.user, logger, statusHandler, '/api/user');
                 resolve();
             } catch (err) {
                 reject(err);

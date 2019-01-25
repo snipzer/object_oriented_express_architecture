@@ -1,40 +1,46 @@
 const Sequelize = require('sequelize');
 
 class BaseDao {
-    constructor(loggerDao, model) {
+    constructor(logger, model) {
         this.model = model;
-        this.loggerDao = loggerDao;
+        this.logger = logger;
         this.op = Sequelize.Op;
     }
 
-    getList() {
-        this.loggerDao.verbose(`${this.constructor.name} - ${this.getList.name}`);
+    findAll() {
+        this.logger.verbose(`${this.constructor.name} - ${this.findAll.name}`);
         return this.model.findAll();
     }
 
-    getObject(id) {
-        this.loggerDao.verbose(`${this.constructor.name} - ${this.getObject.name}`);
-        return this.model.findOne({ where: { id } });
+    getById(objectId) {
+        this.logger.verbose(`${this.constructor.name} - ${this.getById.name}`);
+        return this.model.findOne({ where: { id: objectId } });
     }
 
-    insertObject(object) {
-        this.loggerDao.verbose(`${this.constructor.name} - ${this.insertObject.name}`);
+    findByObject(object) {
+        this.logger.verbose(`${this.constructor.name} - ${this.getById.name}`);
+        return this.model.findAll({ where: object });
+    }
+
+    insert(object) {
+        this.logger.verbose(`${this.constructor.name} - ${this.insert.name}`);
         return this.model.create(object);
     }
 
-    updateObject(object) {
+    update(object) {
+        this.logger.verbose(`${this.constructor.name} - ${this.update.name}`);
         const objectId = object.id;
         delete object.id;
-        this.loggerDao.verbose(`${this.constructor.name} - ${this.updateObject.name}`);
         return this.model.update(object, { where: { id: objectId } });
     }
 
-    deleteObject(id) {
-        this.loggerDao.verbose(`${this.constructor.name} - ${this.deleteObject.name}`);
+    deleteById(id) {
+        this.logger.verbose(`${this.constructor.name} - ${this.deleteById.name}`);
         return this.model.destroy({ where: { id } });
     }
 
-    deleteObjectByCondition(object) {
+    deleteByObject(object) {
+        this.logger.verbose(`${this.constructor.name} - ${this.deleteByObject().name}`);
         return this.model.destroy({ where: object });
     }
 }

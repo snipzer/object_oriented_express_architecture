@@ -8,7 +8,7 @@ const RightEnum = require('../enum/RightEnum');
 class UserService extends BaseService {
     constructor(daos, logger) {
         super(logger);
-        this.dao = daos.userDao;
+        this.dao = daos.user;
     }
 
     getUserById(userId, session) {
@@ -16,7 +16,7 @@ class UserService extends BaseService {
             const isSelfRequestor = session.user.id === userId;
             const isNotUserOrReferee = session.user.role !== RightEnum.USER.name && session.user.role !== RightEnum.REFEREE.name;
             if (isSelfRequestor || isNotUserOrReferee) {
-                this.dao.getObject(userId).then((user) => {
+                this.dao.getById(userId).then((user) => {
                     if (user !== null) {
                         resolve(new UserDto(user));
                     } else {
@@ -33,7 +33,7 @@ class UserService extends BaseService {
         return new Promise((resolve, reject) => {
             const isNotUserOrReferee = session.user.role !== RightEnum.USER.name && session.user.role !== RightEnum.REFEREE.name;
             if (isNotUserOrReferee) {
-                this.dao.getList()
+                this.dao.findAll()
                     .then(users => resolve(DtoUtil.createListUserDto(users)))
                     .catch(err => reject(err));
             } else {
@@ -44,7 +44,7 @@ class UserService extends BaseService {
 
     deleteUser(userId, session) {
         return new Promise((resolve, reject) => {
-            this.dao.getObject(userId).then((user) => {
+            this.dao.getById(userId).then((user) => {
                 const isSelfRemoving = userId === session.user.id;
                 if (!isSelfRemoving) {
                     this._userNotSelfRemovingProcess(session, user, reject, resolve);
@@ -84,14 +84,14 @@ class UserService extends BaseService {
     }
 
     _removeUser(user, resolve, reject) {
-        this.dao.deleteObject(user.id).then(() => {
+        this.dao.deleteById(user.id).then(() => {
             resolve('User has been successfully deleted !');
         }).catch(err => reject(err));
     }
 
     register(userInformations) {
         return new Promise((resolve, reject) => {
-            this.dao.insertObject(userInformations)
+            this.dao.insert(userInformations)
                 .then(user => resolve(new UserDto(user)))
                 .catch(err => reject(err));
         });
@@ -99,7 +99,7 @@ class UserService extends BaseService {
 
     changeUserRight(userId, roleId, session) {
         return new Promise((resolve, reject) => {
-            this.dao.getObject(userId).then((user) => {
+            this.dao.getById(userId).then((user) => {
                 if (session.user.role === RightEnum.SUPER_ADMIN.name) {
                     this._godProcess(user, roleId, reject, resolve);
                 } else if (session.user.role === RightEnum.ADMIN.name) {
@@ -128,7 +128,7 @@ class UserService extends BaseService {
     }
 
     _changeRightProcess(user, roleId, resolve, reject) {
-        this.dao.updateObject({ id: user.id, role: roleId })
+        this.dao.update({ id: user.id, role: roleId })
             .then(rowCount => resolve(rowCount))
             .catch(err => reject(err));
     }
@@ -137,7 +137,7 @@ class UserService extends BaseService {
         return new Promise((resolve, reject) => {
             if (this._checkUpdateUser(req)) {
                 this._checkUserDiff(req).then((filteredUser) => {
-                    this.dao.updateObject(filteredUser)
+                    this.dao.update(filteredUser)
                         .then(rowAffected => resolve(rowAffected))
                         .catch(err => reject(err));
                 }).catch(err => reject(err));
@@ -149,7 +149,7 @@ class UserService extends BaseService {
 
     _checkUserDiff(req) {
         return new Promise((resolve, reject) => {
-            this.dao.getObject(req.body.userId).then((user) => {
+            this.dao.getById(req.body.userId).then((user) => {
                 if (user === null) {
                     reject(new Error('User not found.'));
                 } else {
@@ -207,7 +207,7 @@ class UserService extends BaseService {
     changePassword(email, oldPassword, newPassword) {
         return new Promise((resolve, reject) => {
             this.dao.getOneByMail(email).then((user) => {
-                if(user === null) {
+                if (user === null) {
                     reject(new Error('User not found'));
                 } else {
                     BcryptUtils.validPassword(user.password, oldPassword).then((isSame) => {
