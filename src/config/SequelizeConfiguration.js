@@ -1,6 +1,6 @@
 const configSequelize = {
     host: process.env.DB_HOST,
-    dialect: 'mysql',
+    dialect: process.env.DB_TYPE,
     pool: {
         max: 5,
         min: 0,
