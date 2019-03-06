@@ -49,6 +49,7 @@ class UserModel extends BaseModel {
                 },
             },
             password: Sequelize.STRING,
+            city: Sequelize.STRING,
             role: Sequelize.INTEGER,
         });
         this.model.beforeCreate((user) => {

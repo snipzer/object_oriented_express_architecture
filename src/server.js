@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const logger = require('./config/Logger');
 const StatusHandler = require('./middleware/StatusHandler');
 const SequelizeConnector = require('./config/SequelizeConnector');
@@ -20,6 +21,7 @@ class Server {
         this.setPort();
         this.setSession();
         this.setStatusCodeHandler();
+        this.setViewEngine();
     }
 
     /**
@@ -97,6 +99,12 @@ class Server {
                 secure: false,
             }
         }));
+    }
+
+    setViewEngine() {
+        this.app.use(express.static(path.join(__dirname, '/../public')));
+        this.app.set('view engine', 'twig');
+        this.app.set('views', path.join(__dirname, '../src/views/'));
     }
 }
 

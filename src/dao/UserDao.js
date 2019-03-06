@@ -18,6 +18,14 @@ class UserDao extends BaseDao {
             }
         });
     }
+
+    findUsersByCity(cit) {
+        return this.model.findAll({
+            where: {
+                city: cit,
+            }
+        });
+    }
 }
 
 module.exports = UserDao;

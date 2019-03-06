@@ -1,0 +1,82 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100,700,100italic,300italic,400italic,700italic);
+
+html {
+    height: 100%;
+}
+body {
+    background: #fff;
+    font-family:'Roboto', sans-serif;
+    font-weight: 300;
+    color: #454545; font-size:15px;
+    line-height: 26px;
+    font-family: 'Roboto', sans-serif;
+}
+#login, #entreprise, #register-card {
+    display:none;
+}
+
+#error, #success {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+}
+
+#error_msg {
+    width: 250px;
+    display: block;
+    margin: auto;
+    background-color: #f5f5f5;
+    color: #ac2925;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+    left: -50%;
+    border-radius: 2px;
+}
+
+#success_msg {
+    width: 250px;
+    display: block;
+    margin: auto;
+    background-color: #f5f5f5;
+    color: #4cae4c;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+    left: -50%;
+    border-radius: 2px;
+}
+
+.login-card .card {
+    padding: 40px;
+    width: 274px;
+    margin: 0 auto 10px;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top:100px;
+}
+.register-card .card {
+    padding: 20px;
+    margin: 0 auto 10px;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top:50px;
+}
+.login-help {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+}
+.login-help a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 400;
+    text-align: center;
+    display: inline-block;
+    opacity: 0.6;
+    transition: opacity ease 0.5s;
+}
+
+.p_label {
+    font-weight: bold;
+}

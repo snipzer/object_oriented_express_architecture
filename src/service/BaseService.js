@@ -1,4 +1,3 @@
-
 class BaseService {
     constructor(logger) {
         this.logger = logger;
