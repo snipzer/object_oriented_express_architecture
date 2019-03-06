@@ -102,6 +102,7 @@ class Server {
     }
 
     setViewEngine() {
+        logger.info('Setting view engine...');
         this.app.use(express.static(path.join(__dirname, '/../public')));
         this.app.set('view engine', 'twig');
         this.app.set('views', path.join(__dirname, '../src/views/'));

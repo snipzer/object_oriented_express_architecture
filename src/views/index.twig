@@ -1,14 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" charset="utf-8">
-    <title>Accueil</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body>
+{% extends "template/base.twig" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="css/index.css">
+{% endblock %}
+
+{% block content %}
     <h1>Nothing to see here use postman !</h1>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</html>
+    <p>{{ test }}</p>
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+    <script src="js/index.js"></script>
+{% endblock %}
